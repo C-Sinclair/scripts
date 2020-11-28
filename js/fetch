@@ -1,0 +1,7 @@
+#!/usr/bin/env -S NODE_PATH="/home/conor/scripts/node_modules" ESM_OPTIONS="{cache:0}" /home/conor/.nvm/versions/node/v14.15.1/bin/node --require=esm --require=globals
+
+const response = await fetch($1)
+const data = (response.headers.get("Content-Type") === 'application/json') 
+  ? await response.json()
+  : await response.text()
+console.log(data)

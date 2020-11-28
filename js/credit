@@ -1,0 +1,31 @@
+#!node
+
+const PAYMENT_AMOUNT = process.argv[2] || 200
+const INTEREST_RATE = 37.3
+
+const interest = fig => fig / INTEREST_RATE
+const next_month = (total) => total - PAYMENT_AMOUNT + interest(total)
+const figures = (() => {
+    let total = 2800
+    let data = [total]
+    let i = 0
+    while(total > 0) {
+        total = next_month(total)
+        data.push(total)
+        i++
+    }
+    i
+    return data
+})()
+
+let total_interest = 0
+let total_figures = figures.map((fig, i) => {
+    total_interest += interest(fig)
+    return `Month ${i} , Total = ${fig} , Interest for month = ${interest}`
+})
+
+console.log({
+    monthly_payment: `£${PAYMENT_AMOUNT}`,
+    paid_in: `${total_figures.length} months`,
+    total_interest: `£${total_interest}`
+})

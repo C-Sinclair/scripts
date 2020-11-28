@@ -1,0 +1,20 @@
+#/bin/bash
+
+DATE=$(date '+%d%m%Y_%H%M%S')
+INPUT=1
+OUTPUT="/home/conor/Videos/tmp/${DATE}.mp4"
+
+while test $# != 0
+do
+    case "$1" in
+    # -i) INPUT="$2"; shift ;;
+    *)  OUTPUT="/home/conor/Videos/tmp/${DATE}_${1}.mp4" ;;
+    esac
+    shift
+done
+
+echo "🎤Recording Second Monitor to $OUTPUT 🎤"
+
+ffmpeg -f x11grab -r 25 -s 1920x1080 -i :0.0+1366 -y $OUTPUT
+
+echo "🚀All Recorded Buddy🚀"

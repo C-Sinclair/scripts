@@ -1,0 +1,23 @@
+#/bin/bash
+
+DATE=$(date '+%d%m%Y_%H%M%S')
+OUTPUT="/home/conor/Videos/tmp/${DATE}.gif"
+CMD=""
+
+while test $# != 0
+do
+    case "$1" in
+    -start) CMD+=" -ss $2 "; shift ;;
+    -duration) CMD+=" -d $2 "; shift ;;
+    -o) OUTPUT="/home/conor/Videos/tmp/${1}.gif"; shift ;;
+    esac
+    shift
+done
+
+echo "🐈One Gif Coming Up! 🐈"
+
+# add $CMD later
+
+ffmpeg -i $1 -loop 0 $OUTPUT
+
+echo "🚀$OUTPUT created 🚀"

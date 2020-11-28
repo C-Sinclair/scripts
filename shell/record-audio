@@ -1,0 +1,26 @@
+#/bin/bash
+
+
+echo "🧨Here's your connected cards:"
+sudo arecord -l | grep '^card*'
+read -p "Which card to record from ? " INPUT
+
+DATE=$(date '+%d%m%Y_%H%M%S')
+# INPUT=1
+OUTPUT="/home/conor/Audio/tmp/${DATE}.wav"
+
+while test $# != 0
+do
+    case "$1" in
+    -i) INPUT="$2"; shift ;;
+    -l) pactl list short sources; exit ;;
+    *)  OUTPUT="/home/conor/Audio/tmp/${DATE}_${1}.wav" ;;
+    esac
+    shift
+done
+
+echo "🎤$OUTPUT 🎤"
+
+ffmpeg -f pulse -ac 1 -i $INPUT -af "afftdn" -crf 0 -preset ultrafast $OUTPUT
+
+echo "🚀Great Record Mate🚀"
